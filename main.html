@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>회사 메신저</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 로그인 폼 -->
+        <div id="login-form">
+            <h2>로그인</h2>
+            <input type="text" id="login-username" placeholder="이름" autocomplete="off" required>
+            <input type="email" id="login-email" placeholder="이메일" autocomplete="off" required>
+            <input type="password" id="login-password" placeholder="비밀번호" autocomplete="off" required>
+            <button onclick="login()">로그인</button>
+            <p>계정이 없으신가요? <a href="#" onclick="toggleForms()">회원가입</a></p>
+        </div>
+        <!-- 회원가입 폼 -->
+        <div id="signup-form" class="hidden">
+            <h2>회원가입</h2>
+            <input type="text" id="signup-username" placeholder="이름" autocomplete="off" required>
+            <input type="email" id="signup-email" placeholder="이메일" autocomplete="off" required>
+            <input type="password" id="signup-password" placeholder="비밀번호" autocomplete="off" required>
+            <button onclick="signup()">회원가입</button>
+            <p>이미 계정이 있으신가요? <a href="#" onclick="toggleForms()">로그인</a></p>
+        </div>
+        <!-- 채팅 UI -->
+        <div id="chat-ui" class="hidden">
+            <!-- 프로필 및 메뉴 -->
+            <div id="profile">
+                <div id="profile-button"><img src="img/mypage.png" alt="프로필" role="img"></div>
+                <div id="profile-menu">
+                    <button onclick="showFriendForm()">친구 추가</button>
+                    <button onclick="showNotice()">공지사항</button>
+                    <button onclick="logout()">로그아웃</button>
+                </div>
+            </div>
+            <!-- 친구 목록 -->
+            <div class="sidebar">
+                <p id="username"></p>
+                <p><span>친구 수 : </span><span id="friend-count"></span>명</p>
+                <h2 style="margin: 0;">친구 목록</h2> <!-- 총 친구 수 표시 -->
+                <ul id="friend-list"></ul>
+                <div class="pagination">
+                    <button id="prev-page" onclick="changePage(-1)" disabled>이전</button>
+                    <button id="next-page" onclick="changePage(1)" disabled>다음</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 1:1 채팅 창 -->
+    <div id="private-chat-window" class="hidden">
+        <div class="private-chat-header">
+            <span id="private-chat-friend"></span>
+            <button onclick="closePrivateChat()">닫기</button>
+        </div>
+        <div id="private-messages" class="private-chat-room"></div>
+        <div style="display: flex; margin-top: 10px;">
+            <input id="private-message-input" type="text" placeholder="메시지 입력" autocomplete="off">
+            <button onclick="sendPrivateMessage()">전송</button>
+        </div>
+    </div>
+    <!-- 공지사항 모달 -->
+    <div id="notice-overlay" class="modal-overlay hidden" onclick="hideNotice()"></div>
+    <div id="notice-modal" class="modal">
+        <h2>공지사항</h2><hr>
+        <p>
+            <span class="NT">작성: 2024년 8월 13일</span><br>
+            <span>
+                친구 목록이 안 나온다면, F5를 눌러 새로고침을 해보세요.
+            </span>
+        </p><hr>
+        <button onclick="hideNotice()">닫기</button>
+    </div>
+    <!-- 친구 추가 모달 -->
+    <div id="add-friend-overlay" class="modal-overlay hidden" onclick="hideAddFriendModal()"></div>
+    <div id="add-friend-modal" class="modal">
+        <h2>친구 추가</h2>
+        <input type="text" id="modal-friend-name" placeholder="친구 이름" autocomplete="off">
+        <input type="email" id="modal-friend-email" placeholder="친구 이메일" autocomplete="off">
+        <button onclick="addFriendFromModal()">추가</button>
+        <button onclick="hideAddFriendModal()">닫기</button>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
